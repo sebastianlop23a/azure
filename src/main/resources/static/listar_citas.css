@@ -1,0 +1,170 @@
+/* ============================= */
+/* Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+}
+
+/* ============================= */
+/* Card */
+.card {
+    width: 100%;
+    max-width: 1100px;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: #1e1e1e;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.titulo-principal {
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 26px;
+}
+
+/* ============================= */
+/* Tabla */
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.tabla-citas {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.tabla-citas th,
+.tabla-citas td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+.tabla-citas thead {
+    background-color: #2b2b2b;
+}
+
+.tabla-citas th {
+    color: #74ebd5;
+    font-size: 15px;
+}
+
+.tabla-citas tbody tr:hover {
+    background-color: #2c2c2c;
+}
+
+.sin-citas {
+    text-align: center;
+    color: #ff9800;
+    font-weight: bold;
+    padding: 20px;
+}
+
+/* ============================= */
+/* Botón dentro de tabla */
+.btn-accion {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-accion:hover {
+    background-color: #3ea9c1;
+    color: #ffffff;
+}
+
+/* ============================= */
+/* Sección admin */
+.seccion-admin {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px dashed #74ebd5;
+    border-radius: 10px;
+    background-color: #222;
+}
+
+.subtitulo {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.form-csv input[type="file"] {
+    margin-bottom: 15px;
+    color: #cccccc;
+}
+
+.btn-csv {
+    background-color: #e53935;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-csv:hover {
+    background-color: #b71c1c;
+}
+
+/* ============================= */
+/* Acciones finales */
+.acciones-finales {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-home, .btn-agendar {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-home {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+}
+
+.btn-home:hover {
+    background-color: #3ea9c1;
+    color: #ffffff;
+}
+
+.btn-agendar {
+    background-color: #4caf50;
+    color: #ffffff;
+}
+
+.btn-agendar:hover {
+    background-color: #2e7d32;
+}

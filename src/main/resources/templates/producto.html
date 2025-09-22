@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+    <link rel="stylesheet" th:href="@{/productos.css}">    
+</head>
+<body>
+    <div class="card">
+        <h1>Lista de Productos</h1>
+
+        <!-- Formulario de búsqueda (todos pueden usarlo) -->
+        <form th:action="@{/producto}" method="get">
+            <input type="text" name="filtro" th:value="${filtro}" placeholder="Buscar por nombre..." />
+            <button type="submit">Buscar</button>
+            <a th:href="@{/producto}" class="limpiar">Limpiar</a>
+            <a th:href="@{/home}" class="btn-home">Volver al Home</a>
+        </form>
+
+        <!-- Formulario para cargar CSV (SOLO ADMIN) -->
+        <form th:if="${session.empleadoLogueado.rolId == 1}" 
+              th:action="@{/producto/cargar-csv}" 
+              method="post" 
+              enctype="multipart/form-data">
+            <input type="file" name="archivo" accept=".csv" required>
+            <button type="submit">Cargar productos desde CSV</button>
+        </form>
+
+        <!-- Tabla de productos (todos la ven) -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.id}"></td>
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.descripcion}"></td>
+                    <td th:text="${#numbers.formatDecimal(producto.precio, 1, 'POINT', 2, 'COMMA')}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+    </div>
+</body>
+</html>

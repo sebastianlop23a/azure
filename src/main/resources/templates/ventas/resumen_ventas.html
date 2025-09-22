@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resumen de Ventas</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/ventas.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/home}" class="button">Inicio</a>
+        <a th:href="@{/ventas/registrar}" class="button">Registrar Venta</a>
+        <a th:href="@{/producto}" class="button">Ir a Productos</a>
+        <a th:href="@{/empleado/lista}" class="button">Empleados</a>
+    </div>
+
+    <div class="card">
+        <h2>Resumen de ventas para <span th:text="${empleado.nombre}">Empleado</span></h2>
+
+        <!-- Totales en COP -->
+        <p>Total vendido hoy: 
+            <span th:text="${#numbers.formatDecimal(totalHoy, 0, 'COMMA', 2, 'POINT')}"></span> COP
+        </p>
+        <p>Total vendido históricamente: 
+            <span th:text="${#numbers.formatDecimal(totalHistorico, 0, 'COMMA', 2, 'POINT')}"></span> COP
+        </p>
+
+        <!-- Totales en USD y EUR -->
+        <p>Equivalente en USD (Hoy): 
+            $ <span th:text="${#numbers.formatDecimal(totalHoyUSD, 1, 'POINT', 2, 'POINT')}"></span>
+        </p>
+        <p>Equivalente en EUR (Hoy): 
+            € <span th:text="${#numbers.formatDecimal(totalHoyEUR, 1, 'POINT', 2, 'POINT')}"></span>
+        </p>
+        <p>Equivalente en USD (Histórico): 
+            $ <span th:text="${#numbers.formatDecimal(totalHistoricoUSD, 1, 'POINT', 2, 'POINT')}"></span>
+        </p>
+        <p>Equivalente en EUR (Histórico): 
+            € <span th:text="${#numbers.formatDecimal(totalHistoricoEUR, 1, 'POINT', 2, 'POINT')}"></span>
+        </p>
+
+        <hr>
+        <!-- Fecha de actualización de tasas -->
+        <p style="font-size: 0.9em; color: gray;">
+            Tasas de cambio actualizadas: 
+            <span th:text="${ultimaActualizacion}">Fecha</span>
+        </p>
+
+        <!-- Gráficos -->
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px;">
+            <div style="flex: 1; min-width: 300px;">
+                <canvas id="barChart"></canvas>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+        <a th:href="@{/empleado/home}" class="volver-home">← Volver al inicio</a>
+    </div>
+</div>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+    // Totales y ventas por día desde Thymeleaf
+    const totalHoy = /*[[${totalHoy}]]*/ 0;
+    const totalHistorico = /*[[${totalHistorico}]]*/ 0;
+    const ventasPorDia = /*[[${ventasPorDia}]]*/ [0,0,0,0,0,0,0];
+
+    // Gráfico de barras: Ventas por día
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],
+            datasets: [{
+                label: 'Ventas en pesos colombianos',
+                data: ventasPorDia,
+                backgroundColor: '#4CAF50'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { 
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.raw.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Gráfico de pastel: Hoy vs Histórico restante
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: ['Hoy', 'Histórico restante'],
+            datasets: [{
+                data: [totalHoy, Math.max(totalHistorico - totalHoy, 0)],
+                backgroundColor: ['#FF9800', '#9C27B0']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { 
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.raw.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+                        }
+                    }
+                }
+            }
+        }
+    });
+/*]]>*/
+</script>
+</body>
+</html>

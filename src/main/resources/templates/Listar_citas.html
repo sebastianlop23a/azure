@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Citas</title>
+    <link rel="stylesheet" th:href="@{/listar_citas.css}">
+</head>
+<body>
+    <div class="card">
+        <h1 class="titulo-principal">📅 Lista de Citas Agendadas</h1>
+
+        <!-- Botón para envío masivo -->
+        <div class="acciones-masivas">
+            <form th:action="@{/citas/enviar-correo-masivo}" method="get">
+                <button type="submit" class="btn-masivo">✉️ Enviar Correo Masivo (Pendientes)</button>
+            </form>
+        </div>
+
+        <div class="tabla-contenedor">
+            <table class="tabla-citas">
+                <thead>
+                    <tr>
+                        <th>📆 Fecha</th>
+                        <th>⏰ Hora</th>
+                        <th>🏍️ Modelo</th>
+                        <th>📝 Motivo</th>
+                        <th>📋 Descripción</th>
+                        <th>⚡ Estado</th>
+                        <th>✉️ Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Si no hay citas -->
+                    <tr th:if="${#lists.isEmpty(citas)}">
+                        <td colspan="7" class="sin-citas">No hay citas agendadas.</td>
+                    </tr>
+
+                    <!-- Si hay citas -->
+                    <tr th:each="cita : ${citas}">
+                        <td th:text="${cita.fecha}"></td>
+                        <td th:text="${cita.hora}"></td>
+                        <td th:text="${cita.modelo}"></td>
+                        <td th:text="${cita.motivo}"></td>
+                        <td th:text="${cita.descripcion}"></td>
+
+                        <!-- Estado editable -->
+                        <td>
+                            <form th:action="@{'/citas/actualizarEstado/' + ${cita.id}}" method="post">
+                                <select name="estado" onchange="this.form.submit()">
+                                    <option th:value="Pendiente" th:selected="${cita.estado == 'Pendiente'}">Pendiente</option>
+                                    <option th:value="Atendida" th:selected="${cita.estado == 'Atendida'}">Atendida</option>
+                                    <option th:value="Cancelada" th:selected="${cita.estado == 'Cancelada'}">Cancelada</option>
+                                </select>
+                            </form>
+                        </td>
+
+                        <!-- Enviar correo individual -->
+                        <td>
+                            <form th:action="@{'/citas/enviar-correo/' + ${cita.id}}" method="get">
+                                <button type="submit" class="btn-accion">Enviar Correo</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección solo para admin -->
+        <div th:if="${empleadoLogueado != null and empleadoLogueado.rol == 'ADMIN'}" class="seccion-admin">
+            <h2 class="subtitulo">⚙️ Subir Citas desde CSV</h2>
+            <form th:action="@{/citas/subir-csv}" method="post" enctype="multipart/form-data" class="form-csv">
+                <input type="file" name="file" accept=".csv" required>
+                <button type="submit" class="btn-csv">Subir CSV</button>
+            </form>
+        </div>
+
+        <!-- Mensaje -->
+        <div class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></div>
+
+        <!-- Acciones -->
+        <div class="acciones-finales">
+            <a th:href="@{/home}" class="btn-home">🏠 Volver al Home</a>
+            <a th:href="@{/citas/agendar}" class="btn-agendar">➕ Agendar nueva cita</a>
+        </div>
+    </div>
+</body>
+</html>

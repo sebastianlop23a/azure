@@ -1,0 +1,187 @@
+/* ============================= */
+/* Reset y global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    height: 100%; /* Para ocupar toda la pantalla */
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* ============================= */
+/* Layout con sidebar */
+.layout {
+    display: flex;
+    gap: 20px;
+    height: 100vh; /* Ocupa toda la pantalla */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.7);
+    position: fixed; /* Fija en la pantalla */
+    top: 0;
+    left: 0;
+}
+
+.sidebar .button {
+    display: block;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.sidebar .button:hover {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+}
+
+/* ============================= */
+/* Contenedor principal */
+.main-content {
+    flex: 1;
+    margin-left: 240px; /* Deja espacio para la sidebar fija */
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto; /* Scroll si el contenido es grande */
+}
+
+/* Acciones de exportar */
+.acciones-exportar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+/* Títulos */
+h2 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+/* ============================= */
+/* Filtros */
+.filtros {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filtros label {
+    color: #cccccc;
+    font-weight: 500;
+}
+
+.filtros select {
+    min-width: 150px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #2b2b2b;
+    color: #ffffff;
+}
+
+.filtros select:focus {
+    border-color: #74ebd5;
+    outline: none;
+    box-shadow: 0 0 6px rgba(116, 235, 213, 0.5);
+}
+
+/* ============================= */
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table thead {
+    background-color: #2b2b2b;
+}
+
+table th {
+    color: #ffffff;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #333;
+    transition: background 0.2s ease;
+}
+
+table tbody tr:hover {
+    background-color: #333333;
+}
+
+/* ============================= */
+/* Botones */
+.btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background-color: #008CBA;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #006f94;
+}
+
+.btn-danger {
+    background-color: #e53935;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #b71c1c;
+}
+
+.volver-home {
+    display: inline-block;
+    margin-top: 20px;
+    color: #74ebd5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.volver-home:hover {
+    color: #3ea9c1;
+}

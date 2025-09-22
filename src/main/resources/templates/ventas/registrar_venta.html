@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Venta</title>
+    <link rel="stylesheet" th:href="@{/registrar.css}">
+</head>
+<body>
+    <div class="card">
+        <a th:href="@{/home}" class="btn-home">Volver al Home</a>
+        <h2>Registrar Nueva Venta</h2>
+
+        <form th:action="@{/ventas/registrar}" method="post">
+            
+            <!-- Selección de producto -->
+            <label for="inventarioSelect">Producto:</label>
+<select id="inventarioSelect" name="inventarioId" required>
+    <option th:each="inv : ${inventarios}" 
+            th:value="${inv.id}" 
+            th:text="${inv.producto.nombre}"
+            th:attr="data-cantidad=${inv.cantidad}">
+    </option>
+</select>
+<span id="cantidadDisponible" style="color:#74ebd5; font-weight:bold; margin-left:10px;"></span>
+
+            <!-- Cantidad -->
+            <label for="cantidadInput">Cantidad:</label>
+            <input type="number" id="cantidadInput" name="cantidad" min="1" required>
+
+            <!-- Cliente -->
+            <label for="cliente">Cliente:</label>
+            <input type="text" id="cliente" name="cliente" required>
+
+            <!-- Método de pago -->
+            <label for="metodoPago">Método de pago:</label>
+            <select id="metodoPago" name="metodoPago" required>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Transferencia">Transferencia</option>
+            </select>
+
+            <!-- Fecha de venta -->
+            <label for="fechaVenta">Fecha de la venta:</label>
+            <input type="datetime-local" id="fechaVenta" name="fechaVenta"
+                   th:value="${#temporals.format(T(java.time.LocalDateTime).now(), 'yyyy-MM-dd''T''HH:mm')}">
+
+            <button type="submit" class="btn-success">Registrar Venta</button>
+        </form>
+    </div>
+
+    <script>
+    const inventarioSelect = document.getElementById('inventarioSelect');
+    const cantidadInput = document.getElementById('cantidadInput');
+    const cantidadDisponibleSpan = document.getElementById('cantidadDisponible');
+    const form = document.querySelector('form');
+    const fechaVentaInput = document.getElementById('fechaVenta');
+
+    function actualizarCantidadDisponible() {
+        const selectedOption = inventarioSelect.options[inventarioSelect.selectedIndex];
+        const cantidadDisponible = parseInt(selectedOption.getAttribute('data-cantidad'), 10);
+        cantidadDisponibleSpan.textContent = `Disponibles: ${cantidadDisponible}`;
+    }
+
+    inventarioSelect.addEventListener('change', actualizarCantidadDisponible);
+    window.addEventListener('DOMContentLoaded', actualizarCantidadDisponible);
+
+    form.addEventListener('submit', function(e) {
+        const selectedOption = inventarioSelect.options[inventarioSelect.selectedIndex];
+        const cantidadDisponible = parseInt(selectedOption.getAttribute('data-cantidad'), 10);
+        const cantidadSolicitada = parseInt(cantidadInput.value, 10);
+
+        if (cantidadDisponible === 0) {
+            e.preventDefault();
+            alert('No hay inventario disponible para este producto.');
+            return;
+        } else if (cantidadSolicitada > cantidadDisponible) {
+            e.preventDefault();
+            alert('No hay suficiente inventario disponible.');
+            return;
+        }
+
+        // Validar fecha
+        const fechaSeleccionada = new Date(fechaVentaInput.value);
+        const ahora = new Date();
+        // Quitar segundos y milisegundos para comparar solo hasta minutos
+        ahora.setSeconds(0, 0);
+
+        if (fechaSeleccionada < ahora) {
+            e.preventDefault();
+            alert('No puedes registrar ventas con fecha anterior a la actual.');
+        }
+    });
+</script>
+</body>
+</html>

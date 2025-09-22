@@ -1,0 +1,262 @@
+/* ============================= */
+/* Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+}
+
+/* ============================= */
+/* Card */
+.card {
+    width: 100%;
+    max-width: 1100px;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: #1e1e1e;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.titulo-principal {
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 26px;
+}
+
+/* ============================= */
+/* Acciones top */
+.acciones-top {
+    width: 100%;
+    max-width: 1100px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.btn-home {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-home:hover {
+    background-color: #3ea9c1;
+    color: #ffffff;
+}
+
+/* ============================= */
+/* Formulario */
+.form-inventario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 5px;
+    color: #cccccc;
+    font-weight: 500;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: #74ebd5;
+    box-shadow: 0 0 8px rgba(116, 235, 213, 0.5);
+    outline: none;
+}
+
+.btn-agregar {
+    grid-column: span 2;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4caf50;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-agregar:hover {
+    background-color: #2e7d32;
+}
+
+/* ============================= */
+/* Tabla */
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.tabla-inventario {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.tabla-inventario th,
+.tabla-inventario td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+.tabla-inventario thead {
+    background-color: #2b2b2b;
+}
+
+.tabla-inventario th {
+    color: #74ebd5;
+    font-size: 15px;
+}
+
+.tabla-inventario tbody tr:hover {
+    background-color: #2c2c2c;
+}
+
+.sin-items {
+    text-align: center;
+    color: #ff9800;
+    font-weight: bold;
+    padding: 20px;
+}
+
+/* ============================= */
+/* Filtros Inventario */
+.filtros-inventario {
+    margin-bottom: 25px;
+    padding: 18px 24px;
+    background: linear-gradient(90deg, #1e1e1e 0%, #2b2b2b 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(116, 235, 213, 0.10);
+    display: flex;
+    justify-content: center;
+}
+
+.filtros-inventario form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+.filtros-inventario label {
+    color: #74ebd5;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.filtros-inventario input[type="text"],
+.filtros-inventario input[type="number"],
+.filtros-inventario select {
+    padding: 10px 12px;
+    border: 1.5px solid #333;
+    border-radius: 7px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    font-size: 15px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 8px rgba(116, 235, 213, 0.08);
+}
+
+.filtros-inventario input:focus,
+.filtros-inventario select:focus {
+    border-color: #74ebd5;
+    outline: none;
+    box-shadow: 0 0 8px rgba(116, 235, 213, 0.25);
+}
+
+.filtros-inventario button[type="submit"],
+.filtros-inventario button[type="button"] {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 7px;
+    background: linear-gradient(90deg, #4caf50 60%, #74ebd5 100%);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.08);
+}
+
+.filtros-inventario button[type="button"] {
+    background: linear-gradient(90deg, #3ea9c1 60%, #74ebd5 100%);
+    margin-left: 8px;
+    color: #1e1e1e;
+}
+
+.filtros-inventario button[type="submit"]:hover {
+    background: linear-gradient(90deg, #2e7d32 60%, #74ebd5 100%);
+}
+
+.filtros-inventario button[type="button"]:hover {
+    background: linear-gradient(90deg, #74ebd5 60%, #ACB6E5 100%);
+    color: #1e1e1e;
+}
+
+/* Centrar botón de agregar entrada */
+.form-inventario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+.btn-agregar {
+    grid-column: 1 / -1;
+    justify-self: center;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #4caf50 60%, #74ebd5 100%);
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.08);
+    margin-top: 10px;
+}
+
+.btn-agregar:hover {
+    background: linear-gradient(90deg, #2e7d32 60%, #74ebd5 100%);
+}
+
+.alerta-stock {
+    background-color: #2c1a00 !important;
+}

@@ -1,0 +1,144 @@
+/* ============================= */
+/* Estilos globales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    min-height: 100vh;
+    background-color: #181818;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+/* ============================= */
+/* Tarjeta del formulario */
+.card {
+    width: 100%;
+    max-width: 400px;
+    min-width: 260px;
+    padding: 28px 18px;
+    border-radius: 14px;
+    background-color: #222;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+    margin: 32px 12px;
+    position: relative;
+}
+
+.card h1 {
+    margin-bottom: 22px;
+    color: #4caf50;
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* ============================= */
+/* Labels e Inputs */
+.card label {
+    display: block;
+    margin-bottom: 6px;
+    color: #74ebd5;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.card input,
+.card select,
+.card textarea {
+    width: 100%;
+    padding: 11px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    border-radius: 7px;
+    background-color: #292929;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.card textarea {
+    resize: vertical;
+    min-height: 50px;
+    max-height: 140px;
+}
+
+.card input:focus,
+.card select:focus,
+.card textarea:focus {
+    border-color: #4caf50;
+    background-color: #232323;
+    outline: none;
+}
+
+/* ============================= */
+/* Botón principal */
+button {
+    width: 100%;
+    padding: 11px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+button:hover {
+    background-color: #388e3c;
+    color: #fff;
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* ============================= */
+/* Mensajes */
+.mensaje {
+    margin-top: 10px;
+    color: #ff9800;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 7px;
+    padding: 7px 0;
+    background: rgba(255,152,0,0.08);
+}
+
+/* ============================= */
+/* Enlace volver al home */
+.btn-home {
+    display: block;
+    margin-top: 14px;
+    text-align: center;
+    color: #74ebd5;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.btn-home:hover {
+    color: #4caf50;
+}
+
+/* ============================= */
+/* Responsive para pantallas pequeñas */
+@media (max-width: 500px) {
+    .card {
+        max-width: 98vw;
+        padding: 14px 3vw;
+        margin: 12px 0;
+    }
+    .card h1 {
+        font-size: 1.1rem;
+    }
+}

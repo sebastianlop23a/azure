@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario</title>
+    <link rel="stylesheet" th:href="@{/inventario.css}">
+</head>
+
+<body>
+    <div class="acciones-top">
+        <a th:href="@{/home}" class="btn-home">🏠 Volver al Home</a>
+    </div>
+
+    <div class="card">
+        <h1 class="titulo-principal">📦 Inventario</h1>
+
+        <!-- Solo visible para ADMIN -->
+        <form th:if="${session.empleadoLogueado.rolId == 1}" 
+              th:action="@{/inventario/agregar}" method="post" 
+              class="form-inventario">
+            
+            <!-- Producto -->
+            <div class="campo">
+                <label>Producto:</label>
+                <select name="productoId" required>
+                    <option th:each="prod : ${productos}" 
+                            th:value="${prod.id}" 
+                            th:text="${prod.nombre}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Ubicación -->
+            <div class="campo">
+                <label>Ubicación:</label>
+                <select name="ubicacion" required>
+                    <option value="">-- Selecciona un estante --</option>
+                    <option value="Estante 1">Estante 1</option>
+                    <option value="Estante 2">Estante 2</option>
+                    <option value="Estante 3">Estante 3</option>
+                    <option value="Bodega">Bodega</option>
+                </select>
+            </div>
+
+            <!-- Estado -->
+            <div class="campo">
+                <label>Estado:</label>
+                <select name="estado" required>
+                    <option value="">-- Selecciona estado --</option>
+                    <option value="Disponible">Disponible</option>
+                    <option value="No disponible">No disponible</option>
+                </select>
+            </div>
+
+            <!-- Cantidad -->
+            <div class="campo">
+                <label>Cantidad:</label>
+                <input type="number" name="cantidad" min="1" required>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="campo">
+                <label>Observaciones:</label>
+                <input type="text" name="observaciones">
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" class="btn-agregar">➕ Agregar entrada</button>
+        </form>
+
+        <!-- Filtros -->
+        <div class="filtros-inventario">
+            <form id="filtroForm" onsubmit="filtrarTabla(event)">
+                <label>Producto:</label>
+                <input type="text" id="filtroProducto" placeholder="Nombre producto">
+
+                <label>Ubicación:</label>
+                <select id="filtroUbicacion">
+                    <option value="">-- Todas --</option>
+                    <option value="Estante 1">Estante 1</option>
+                    <option value="Estante 2">Estante 2</option>
+                    <option value="Estante 3">Estante 3</option>
+                    <option value="Bodega">Bodega</option>
+                </select>
+
+                <label>Estado:</label>
+                <select id="filtroEstado">
+                    <option value="">-- Todos --</option>
+                    <option value="Disponible">Disponible</option>
+                    <option value="No disponible">No disponible</option>
+                </select>
+
+                <label>Cantidad:</label>
+                <input type="number" id="filtroCantidad" min="1" placeholder="Cantidad">
+
+                <button type="submit">Filtrar</button>
+                <button type="button" onclick="limpiarFiltros()">Limpiar</button>
+            </form>
+        </div>
+
+        <!-- Todos ven la tabla -->
+        <div class="tabla-contenedor">
+            <table class="tabla-inventario" id="tablaInventario">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>📦 Producto</th>
+                        <th>📍 Ubicación</th>
+                        <th>⚙️ Estado</th>
+                        <th>🔢 Cantidad</th>
+                        <th>📝 Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(inventarios)}">
+                        <td colspan="6" class="sin-items">No hay productos en el inventario.</td>
+                    </tr>
+                    <tr th:each="inv : ${inventarios}"
+                        th:classappend="${inv.cantidad < 5} ? 'alerta-stock'">
+                        <td th:text="${inv.id}"></td>
+                        <td th:text="${inv.producto.nombre}"></td>
+                        <td th:text="${inv.ubicacion}"></td>
+                        <td th:text="${inv.estado}"></td>
+                        <td>
+                            <span th:text="${inv.cantidad}"></span>
+                            <span th:if="${inv.cantidad < 5}" style="color:#ff9800; font-weight:bold;">⚠️ Bajo stock</span>
+                        </td>
+                        <td th:text="${inv.observaciones}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+    function filtrarTabla(event) {
+        event.preventDefault();
+        const producto = document.getElementById('filtroProducto').value.toLowerCase();
+        const ubicacion = document.getElementById('filtroUbicacion').value.toLowerCase();
+        const estado = document.getElementById('filtroEstado').value.toLowerCase();
+        const cantidad = document.getElementById('filtroCantidad').value;
+
+        const tabla = document.getElementById('tablaInventario');
+        const filas = tabla.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        for (let i = 0; i < filas.length; i++) {
+            const celdas = filas[i].getElementsByTagName('td');
+            if (celdas.length < 6) continue; // Saltar fila "No hay productos"
+
+            const prodText = celdas[1].textContent.toLowerCase();
+            const ubiText = celdas[2].textContent.toLowerCase();
+            const estText = celdas[3].textContent.toLowerCase();
+            const cantText = celdas[4].textContent;
+
+            let mostrar = true;
+            if (producto && !prodText.includes(producto)) mostrar = false;
+            if (ubicacion && ubiText !== ubicacion && ubicacion !== "") mostrar = false;
+            if (estado && estText !== estado && estado !== "") mostrar = false;
+            if (cantidad && cantText !== cantidad) mostrar = false;
+
+            filas[i].style.display = mostrar ? '' : 'none';
+        }
+    }
+
+    function limpiarFiltros() {
+        document.getElementById('filtroProducto').value = '';
+        document.getElementById('filtroUbicacion').value = '';
+        document.getElementById('filtroEstado').value = '';
+        document.getElementById('filtroCantidad').value = '';
+        filtrarTabla(new Event('submit'));
+    }
+    </script>
+</body>
+</html>

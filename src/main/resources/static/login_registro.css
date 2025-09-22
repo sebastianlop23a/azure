@@ -1,0 +1,142 @@
+/* ============================= */
+/* Estilos globales */
+body {
+    min-height: 100vh;
+    background: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper-center {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tarjeta contenedora */
+.card {
+    background-color: #1e1e1e;
+    padding: 40px 32px;
+    border-radius: 18px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.7);
+    max-width: 370px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    text-align: left;
+    border-left: 8px solid #74ebd5;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card h1 {
+    text-align: center;
+    color: #74ebd5;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+}
+
+.card label {
+    color: #74ebd5;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+.card input[type="text"],
+.card input[type="email"],
+.card input[type="password"],
+.card input[type="tel"],
+.card select {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    border: 1.5px solid #333;
+    border-radius: 10px;
+    background-color: #232323;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    box-shadow: 0 2px 12px rgba(116, 235, 213, 0.07);
+}
+
+.card input:focus,
+.card select:focus {
+    border-color: #74ebd5;
+    box-shadow: 0 0 12px rgba(116, 235, 213, 0.18);
+    outline: none;
+    background-color: #1e1e1e;
+}
+
+.card input::placeholder {
+    color: #cccccc;
+    opacity: 1;
+}
+
+.card button {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(90deg, #74ebd5 0%, #4caf50 100%);
+    color: #1e1e1e;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 12px rgba(76,175,80,0.08);
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.card button:hover {
+    background: linear-gradient(90deg, #3ea9c1 0%, #2e7d32 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+}
+
+.card a {
+    color: #74ebd5;
+    text-decoration: underline;
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.card a:hover {
+    color: #3ea9c1;
+}
+
+.warning {
+    background-color: #ff9800;
+    color: #1e1e1e;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#claveAdminDiv {
+    margin-bottom: 16px;
+}
+
+/* Quitar autofill amarillo en Chrome */
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 100px #232323 inset !important;
+    box-shadow: 0 0 0 100px #232323 inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important;
+}

@@ -1,0 +1,202 @@
+/* ============================= */
+/* Reset y global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* ============================= */
+/* Layout con sidebar */
+.layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.7);
+    flex-shrink: 0;
+}
+
+.sidebar .button {
+    display: block;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.sidebar .button:hover {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+}
+
+/* ============================= */
+/* Contenedor principal */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    overflow-y: auto; /* permite scroll si hay mucho contenido */
+}
+
+/* Tarjeta contenedora */
+.card {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
+
+/* ============================= */
+/* Títulos */
+.card h2 {
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* ============================= */
+/* Labels */
+.card label {
+    display: block;
+    margin-bottom: 5px;
+    color: #cccccc;
+    font-weight: 500;
+}
+
+/* ============================= */
+/* Inputs y selects */
+.card input[type="text"],
+.card input[type="number"],
+.card input[type="datetime-local"],
+.card input[type="tel"],
+.card select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card input:focus,
+.card select:focus {
+    border-color: #74ebd5;
+    box-shadow: 0 0 8px rgba(116, 235, 213, 0.5);
+    outline: none;
+}
+
+/* Mejorar campo teléfono para que se vea igual que los demás */
+.card input[type="tel"] {
+    background-color: #2b2b2b !important;
+    color: #ffffff !important;
+    border: 1px solid #333 !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    padding: 12px 15px !important;
+    margin-bottom: 20px !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: none !important;
+}
+
+.card input[type="tel"]:focus {
+    border-color: #74ebd5 !important;
+    box-shadow: 0 0 8px rgba(116, 235, 213, 0.5) !important;
+    outline: none !important;
+}
+
+/* Placeholder color para todos los navegadores */
+.card input[type="tel"]::placeholder {
+    color: #cccccc !important;
+    opacity: 1 !important;
+}
+
+/* Quitar autofill amarillo en Chrome */
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 100px #2b2b2b inset !important;
+    box-shadow: 0 0 0 100px #2b2b2b inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* ============================= */
+/* Botones */
+button, .btn-success, .btn-home {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+button, .btn-success {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+}
+
+button:hover, .btn-success:hover {
+    background-color: #3ea9c1;
+    color: #ffffff;
+}
+
+.btn-home {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #74ebd5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-home:hover {
+    color: #3ea9c1;
+}
+
+/* ============================= */
+/* Mensajes */
+.mensaje {
+    margin-top: 15px;
+    color: #ff9800;
+    font-weight: 500;
+}
+.error {
+    color: #ff6b6b;
+    font-weight: 500;
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #eee;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 10px;
+        }
+
+        .sidebar a {
+            color: #eee;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #2c2c2c;
+            border-radius: 5px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background-color: #008CBA;
+        }
+
+        .card {
+            flex: 1;
+            padding: 20px;
+            background-color: #1e1e1e;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        h1, h2 {
+            color: #fff;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-quick {
+            background-color: #008CBA;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn-quick:hover { background-color: #005f73; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #333;
+        }
+
+        table tr:hover {
+            background-color: #008CBA33;
+        }
+
+        canvas {
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .alerta {
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .volver-home {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 12px;
+            background-color: #008CBA;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div th:if="${session.empleadoLogueado != null}" class="layout">
+    <!-- Menú lateral -->
+    <nav class="sidebar">
+        <a th:href="@{/empleados/logout}">Cerrar sesión</a>
+        <a th:href="@{/producto}">Productos</a>
+        <a th:href="@{/inventario}">Inventario</a>
+        <a th:href="@{/ventas/registrar}">Registrar Venta</a>
+        <a th:if="${session.empleadoLogueado.rolId == 1}" th:href="@{/ventas/lista}">Listar Ventas</a>
+        <a th:href="@{/ventas/resumen}">Resumen Ventas</a>
+        <a th:href="@{/ventas/mis-ventas}">Mis Ventas</a>
+        <a th:href="@{/citas/agendar}">Agendar Cita</a>
+        <a th:href="@{/citas}">Citas Agendadas</a>
+        <a th:href="@{/home}">Home</a>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="card">
+        <h1>Bienvenido, <span th:text="${session.empleadoLogueado.nombre}">Empleado</span></h1>
+
+        <!-- Alertas -->
+        <div th:if="${alerta != null}" class="alerta">
+            <p th:text="${alerta}">Mensaje importante</p>
+        </div>
+
+        <!-- Alertas de productos bajos -->
+        <div th:if="${productosBajos != null and #lists.size(productosBajos) > 0}" class="alerta">
+            <strong>⚠️ Productos con bajo stock:</strong>
+            <ul>
+                <li th:each="prod : ${productosBajos}"
+                    th:text="${prod.producto.nombre + ' (' + prod.cantidad + ' unidades)'}"></li>
+            </ul>
+        </div>
+
+        <!-- Estadísticas rápidas -->
+        <div class="stats">
+            <div class="stat-box">
+                <h2>Total Ventas Hoy</h2>
+                <p th:text="${#numbers.formatDecimal(ventasHoy, 0, 'COMMA', 0, 'POINT') + ' COP'}">$0</p>
+            </div>
+            <div class="stat-box">
+                <h2>Total Ventas Históricas</h2>
+                <p th:text="${#numbers.formatDecimal(ventasHistoricas, 0, 'COMMA', 0, 'POINT') + ' COP'}">$0</p>
+            </div>
+            <div class="stat-box">
+                <h2>Citas Pendientes</h2>
+                <p th:text="${citasPendientes != null ? citasPendientes : 0}">0</p>
+            </div>
+            <div class="stat-box">
+                <h2>Productos Totales</h2>
+                <p th:text="${productosTotales != null ? productosTotales : 0}">0</p>
+            </div>
+        </div>
+
+        <!-- Gráfico de ventas -->
+        <h2>Ventas de la Semana</h2>
+<canvas id="ventasChart" width="400" height="200"></canvas>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+    // Recibir ventas por día desde el backend
+    const ventasSemana = /*[[${ventasSemana}]]*/ [0,0,0,0,0,0,0];
+
+    const ctx = document.getElementById('ventasChart').getContext('2d');
+    const ventasChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+            datasets: [{
+                label: 'Ventas (COP)',
+                data: ventasSemana,
+                backgroundColor: 'rgba(0, 140, 186, 0.2)',
+                borderColor: 'rgba(0, 140, 186, 1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+                        }
+                    }
+                }
+            }
+        }
+    });
+/*]]>*/
+</script>
+
+    </div>
+</div>
+
+</body>
+</html>

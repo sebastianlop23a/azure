@@ -1,0 +1,222 @@
+/* ============================= */
+/* Estilos globales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* ============================= */
+/* Layout con sidebar */
+.layout {
+    display: flex;
+    height: 100vh; /* Ocupar toda la pantalla */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.7);
+    position: fixed; /* Sidebar fija */
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sidebar .button {
+    display: block;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.sidebar .button:hover {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+}
+
+/* ============================= */
+/* Contenedor principal */
+.card {
+    flex: 1;
+    background-color: #1e1e1e;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-left: 240px; /* Deja espacio para la sidebar fija */
+    min-height: calc(100vh - 40px); /* Altura completa menos márgenes */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================= */
+/* Títulos */
+.card h1, .card h2 {
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* ============================= */
+/* Labels */
+.card label {
+    display: block;
+    margin-bottom: 5px;
+    color: #cccccc;
+    font-weight: 500;
+}
+
+/* ============================= */
+/* Inputs y selects */
+.card input[type="text"],
+.card input[type="email"],
+.card input[type="password"],
+.card input[type="number"],
+.card input[type="datetime-local"],
+.card select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card input::placeholder {
+    color: #888;
+}
+
+.card input:focus,
+.card select:focus {
+    border-color: #74ebd5;
+    box-shadow: 0 0 8px rgba(116, 235, 213, 0.5);
+    outline: none;
+    background-color: #2b2b2b;
+}
+
+/* ============================= */
+/* Botones */
+button, .btn-success, .btn-danger {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+button, .btn-success {
+    background-color: #74ebd5;
+    color: #1e1e1e;
+}
+
+button:hover, .btn-success:hover {
+    background-color: #3ea9c1;
+    color: #ffffff;
+}
+
+.btn-danger {
+    background-color: #e53935;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #b71c1c;
+}
+
+/* Botón volver */
+.volver-home, .btn-home {
+    display: inline-block;
+    margin-top: 20px;
+    color: #74ebd5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.volver-home:hover, .btn-home:hover {
+    color: #3ea9c1;
+}
+
+/* ============================= */
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table thead {
+    background-color: #2b2b2b;
+}
+
+table th {
+    color: #ffffff;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #333;
+    transition: background 0.2s ease;
+}
+
+table tbody tr:hover {
+    background-color: #333333;
+}
+
+/* ============================= */
+/* Filtros */
+.filtros {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.filtros label {
+    color: #cccccc;
+}
+
+.filtros select {
+    min-width: 150px;
+}
+
+/* ============================= */
+/* Acciones de exportar */
+.acciones-exportar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}

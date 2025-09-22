@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Empleados</title>
+    <link rel="stylesheet" th:href="@{/inventario.css}">
+</head>
+<body>
+    <div class="acciones-top">
+        <a th:href="@{/home}" class="btn-home">← Volver al Home</a>
+    </div>
+
+    <div class="card">
+        <h2 class="titulo-principal">Lista de Empleados</h2>
+
+        <div class="tabla-contenedor">
+            <table class="tabla-inventario">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th th:if="${session.empleadoLogueado.rolId == 1}">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="empleado : ${empleados}">
+                        <td th:text="${empleado.id}"></td>
+                        <td th:text="${empleado.nombre}"></td>
+                        <td th:text="${empleado.correo}"></td>
+                        <td th:text="${empleado.telefono}"></td>
+                        <td th:text="${roles[empleado.rolId]}"></td>
+
+                        <!-- Estado -->
+                        <td th:text="${empleado.activo ? 'Activo' : 'Inactivo'}"
+                            th:classappend="${empleado.activo} ? 'estado-activo' : 'estado-inactivo'">
+                        </td>
+
+                        <!-- Botón solo visible para admin y empleados activos -->
+                        <td th:if="${session.empleadoLogueado.rolId == 1}">
+                            <form th:if="${empleado.activo}" 
+                                  th:action="@{/empleado/despedir/{id}(id=${empleado.id})}" 
+                                  method="post" 
+                                  onsubmit="return confirm('¿Seguro que quieres despedir a este empleado?');">
+                                <button type="submit" class="btn-despedir">Despedir</button>
+                            </form>
+                            <span th:if="${!empleado.activo}" class="texto-inactivo">Ya despedido</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${empleados.isEmpty()}">
+                        <td colspan="7" class="sin-items">No hay empleados registrados</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

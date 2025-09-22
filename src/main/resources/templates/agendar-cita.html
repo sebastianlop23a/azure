@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" href="static/citas.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendar cita de mantenimiento</title>
+    <link rel="stylesheet" th:href="@{/citas.css}">
+</head>
+<body>
+    <div class="card">
+        <h1>Agendar cita de mantenimiento</h1>
+        <form th:action="@{/citas/agendar}" method="post">
+            <div>
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" required>
+            </div>
+            <div>
+                <label for="hora">Hora:</label>
+                <input type="time" id="hora" name="hora" required>
+            </div>
+            <div>
+                <label for="modelo">Modelo de la moto:</label>
+                <input type="text" id="modelo" name="modelo" required>
+            </div>
+            <div>
+                <label for="motivo">Motivo:</label>
+                <input type="text" id="motivo" name="motivo" required>
+            </div>
+            <div>
+                <label for="descripcion">Descripción principal del problema:</label>
+                <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+            </div>
+            <!-- 👇 Nuevo campo para el correo del cliente -->
+            <div>
+                <label for="correo">Correo de contacto:</label>
+                <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            <button type="submit">Agendar</button>
+        </form>
+
+        <div class="mensaje" th:text="${mensaje}"></div>
+        <a th:href="@{/home}" class="btn-home">Volver al Home</a>
+    </div>
+</body>
+</html>

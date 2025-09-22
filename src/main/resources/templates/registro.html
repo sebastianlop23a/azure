@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <link rel="stylesheet" th:href="@{/login_registro.css}">
+    <script>
+        function mostrarClaveAdmin() {
+            const rol = document.getElementById("rol");
+            const claveAdminDiv = document.getElementById("claveAdminDiv");
+            if (rol.value === "1") { // 1 = Admin
+                claveAdminDiv.style.display = "block";
+            } else {
+                claveAdminDiv.style.display = "none";
+                document.getElementById("claveAdminInput").value = "";
+            }
+        }
+        document.addEventListener('DOMContentLoaded', mostrarClaveAdmin);
+    </script>
+</head>
+<body>
+    <div class="card">
+        <h1>Registro de Empleado</h1>
+
+        <div th:if="${error}" class="warning">
+            <p th:text="${error}"></p>
+        </div>
+
+        <form th:action="@{/empleados/registro}" th:object="${empleado}" method="post">
+            <label>Nombre:</label>
+            <input type="text" th:field="*{nombre}" required>
+
+            <label>Correo:</label>
+            <input type="email" th:field="*{correo}" required>
+
+
+            <label>Teléfono:</label>
+            <input type="tel" th:field="*{telefono}" required maxlength="10" pattern="\d{10}" title="Debe ingresar hasta 10 números">
+
+            <label>Contraseña:</label>
+            <input type="password" th:field="*{contrasena}" required>
+
+            <label>Rol:</label>
+            <select id="rol" name="rolId" th:field="*{rolId}" onchange="mostrarClaveAdmin()" required>
+                <option value="" disabled selected>Seleccione un rol</option>
+                <option value="1">Admin</option>
+                <option value="2">Cajero</option>
+            </select>
+
+            <div id="claveAdminDiv" style="display: none;">
+                <label>Clave de administrador:</label>
+                <input type="password" id="claveAdminInput" name="claveAdminInput" th:value="${claveAdminInput}">
+            </div>
+
+            <button type="submit">Registrar</button>
+        </form>
+
+        <p><a th:href="@{/empleados/login}">¿Ya tienes cuenta? Inicia sesión</a></p>
+    </div>
+
+    <script>
+document.querySelector('form').addEventListener('submit', function(e) {
+    // Validar correo
+    const correo = document.querySelector('input[type="email"]').value;
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!correoRegex.test(correo) || !correo.endsWith('.com')) {
+        alert('El correo debe ser válido y terminar en .com');
+        e.preventDefault();
+        return;
+    }
+
+    // Validar contraseña
+    const contrasena = document.querySelector('input[type="password"][th\\:field="*{contrasena}"]').value;
+    if (contrasena.length < 8) {
+        alert('La contraseña debe tener al menos 8 caracteres.');
+        e.preventDefault();
+        return;
+    }
+
+    // Validar teléfono (máximo 10 dígitos)
+    const telefono = document.querySelector('input[th\\:field="*{telefono}"]').value;
+    const telefonoRegex = /^\d{1,10}$/;
+    if (!telefonoRegex.test(telefono)) {
+        alert('El teléfono debe tener solo números y máximo 10 dígitos.');
+        e.preventDefault();
+        return;
+    }
+});
+
+    if ("[[${cuentaCreada}]]" === "true") {
+        alert("¡Cuenta creada!");
+    }
+</script>
+</body>
+</html>
