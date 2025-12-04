@@ -50,4 +50,6 @@ jobs:
           app-name: 'bj-byte'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C3580DFDF4754E08B6B207C273D387BD }}
+
+
